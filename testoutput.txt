@@ -1,0 +1,55 @@
+PS C:\Users\darkg\Documents\coding\docker-poker> ./build_docker.sh my_poker  
+PS C:\Users\darkg\Documents\coding\docker-poker> docker run --rm  my_poker ./run_tests.sh  
+test_hands_00_Four_Cards (test_poker.TestPokerHands.test_hands_00_Four_Cards) ... ok
+test_hands_01_Six_Cards (test_poker.TestPokerHands.test_hands_01_Six_Cards) ... ok
+test_hands_02_Empty (test_poker.TestPokerHands.test_hands_02_Empty) ... ok
+test_hands_03_Invalid_Rank (test_poker.TestPokerHands.test_hands_03_Invalid_Rank) ... ok
+test_hands_04_Invalid_Suit (test_poker.TestPokerHands.test_hands_04_Invalid_Suit) ... ok
+test_hands_05_Invalid_Rank_and_Suit (test_poker.TestPokerHands.test_hands_05_Invalid_Rank_and_Suit) ... ok
+test_hands_06_Not_a_list (test_poker.TestPokerHands.test_hands_06_Not_a_list) ... ok
+test_hands_07_List_with_non_list_elements (test_poker.TestPokerHands.test_hands_07_List_with_non_list_elements) ... ok
+test_hands_08_List_with_invalid_list_elements (test_poker.TestPokerHands.test_hands_08_List_with_invalid_list_elements) ... ok
+test_hands_09_List_with_empty_elements (test_poker.TestPokerHands.test_hands_09_List_with_empty_elements) ... ok
+test_hands_10_Card_description_too_short (test_poker.TestPokerHands.test_hands_10_Card_description_too_short) ... ok
+test_hands_11_Card_description_too_long (test_poker.TestPokerHands.test_hands_11_Card_description_too_long) ... ok
+test_hands_12_Duplicate_within_same_hand (test_poker.TestPokerHands.test_hands_12_Duplicate_within_same_hand) ... ok
+test_hands_13_Duplicate_between_hands (test_poker.TestPokerHands.test_hands_13_Duplicate_between_hands) ... ok
+test_hands_14_Ace_High_Straight_Flush (test_poker.TestPokerHands.test_hands_14_Ace_High_Straight_Flush) ... ok
+test_hands_15_King_High_Straight_Flush (test_poker.TestPokerHands.test_hands_15_King_High_Straight_Flush) ... ok
+test_hands_16_Ace_Low_Straight_Flush (test_poker.TestPokerHands.test_hands_16_Ace_Low_Straight_Flush) ... ok
+test_hands_17_Four_Of_A_Kind (test_poker.TestPokerHands.test_hands_17_Four_Of_A_Kind) ... ok
+test_hands_18_Full_House (test_poker.TestPokerHands.test_hands_18_Full_House) ... ok
+test_hands_19_Flush (test_poker.TestPokerHands.test_hands_19_Flush) ... ok
+test_hands_20_Ace_High_Straight (test_poker.TestPokerHands.test_hands_20_Ace_High_Straight) ... ok
+test_hands_21_Ace_Low_Straight (test_poker.TestPokerHands.test_hands_21_Ace_Low_Straight) ... ok
+test_hands_22_Three_of_a_Kind (test_poker.TestPokerHands.test_hands_22_Three_of_a_Kind) ... ok
+test_hands_23_Two_Pair (test_poker.TestPokerHands.test_hands_23_Two_Pair) ... ok
+test_hands_24_One_Pair (test_poker.TestPokerHands.test_hands_24_One_Pair) ... ok
+test_hands_25_High_Card (test_poker.TestPokerHands.test_hands_25_High_Card) ... ok
+test_hands_26_Straight_Flush_Multiple (test_poker.TestPokerHands.test_hands_26_Straight_Flush_Multiple) ... ok
+test_hands_27_Full_House_Multiple (test_poker.TestPokerHands.test_hands_27_Full_House_Multiple) ... ok
+test_hands_28_Pair_Multiple (test_poker.TestPokerHands.test_hands_28_Pair_Multiple) ... FAIL
+test_hands_29_High_Card_Multiple (test_poker.TestPokerHands.test_hands_29_High_Card_Multiple) ... ok
+test_hands_30_High_Card_Multiple_Tie (test_poker.TestPokerHands.test_hands_30_High_Card_Multiple_Tie) ... ok
+test_hands_31_Ace_High_Card_Multiple (test_poker.TestPokerHands.test_hands_31_Ace_High_Card_Multiple) ... ok
+test_hands_32_Ace_High_Card_Multiple_Tie (test_poker.TestPokerHands.test_hands_32_Ace_High_Card_Multiple_Tie) ... ok
+test_hands_33_Ace_High_Card_Multiple (test_poker.TestPokerHands.test_hands_33_Ace_High_Card_Multiple) ... ok
+
+======================================================================
+FAIL: test_hands_28_Pair_Multiple (test_poker.TestPokerHands.test_hands_28_Pair_Multiple)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.13/site-packages/parameterized/parameterized.py", line 620, in standalone_func
+    return func(*(a + p.args), **p.kwargs, **kw)
+  File "/app/test_poker.py", line 206, in test_hands
+    self.assertEqual(evaluate_hands(test_input), expected )
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: "One Pair  ['Ac', 'Qc', 'Jc', 'Jd', '8c']" != "One Pair  ['Kd', 'Ks', 'Qs', 'Jd', '5s']"
+- One Pair  ['Ac', 'Qc', 'Jc', 'Jd', '8c']
++ One Pair  ['Kd', 'Ks', 'Qs', 'Jd', '5s']
+
+
+----------------------------------------------------------------------
+Ran 34 tests in 0.007s
+
+FAILED (failures=1)
