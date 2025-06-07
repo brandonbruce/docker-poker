@@ -52,22 +52,73 @@ def evaluate_hands(hands):
     return tiebreaker(winning_ranks)
 
 def tiebreaker(hands):
-    winning_hand = hands[0][0]
-    winners = []
-    for i in range(5):
-        values = [hand[1][i] for hand in hands]
-        lowest = min(values)
-        for index,hand in enumerate(hands):
-            currentValue = hand[1][i]
-            if(currentValue != lowest):
-                hand[0] = "Lost"
-    for hand in hands:
-        if(hand[0] == winning_hand):
-            winners.append(hand[2])
-    if(len(winners) > 1):
+    """
+    Refactored to handle tie-breaking based on hand type, including proper kicker comparison.
+    For example, for 'One Pair', it compares the pair rank first, then kickers in descending order.
+    """
+    if not hands:
+        return "No hands to evaluate."
+    
+    hand_type = hands[0][0].lower()  # All hands in 'hands' have the same type
+    
+    def get_comparison_key(hand_info):
+        ranks = hand_info[1]  # List of rank integers (lower is better, e.g., Ace=0)
+        rank_counts = defaultdict(int)
+        for r in ranks:
+            rank_counts[r] += 1
+        
+        # Special handling for straights to determine the effective high card
+
+        if hand_type in ["straight Flush", "straight"]:
+            if max(ranks) - min(ranks) == 4:
+                high_card = min(ranks)  # Standard straight, high card is the best (lowest value)
+            else:
+                # Ace-low (wheel) straight: high card is the next best (e.g., 5 in A-2-3-4-5)
+                high_card = min(r for r in ranks if r != 0)
+            return (high_card,)
+        
+        elif hand_type == "four of a kind":
+            four_rank = [r for r, count in rank_counts.items() if count == 4][0]
+            kicker = [r for r, count in rank_counts.items() if count == 1][0]
+            return (four_rank, kicker)
+        
+        elif (hand_type == "full house"):
+            three_rank = [r for r, count in rank_counts.items() if count == 3][0]
+            two_rank = [r for r, count in rank_counts.items() if count == 2][0]
+            return (three_rank, two_rank)
+        
+        elif hand_type == "three of a kind":
+            three_rank = [r for r, count in rank_counts.items() if count == 3][0]
+            kickers = sorted([r for r, count in rank_counts.items() if count == 1])
+            return (three_rank, *kickers)  # Unpack for comparison
+        
+        elif hand_type == "two pair":
+            pairs = sorted([r for r, count in rank_counts.items() if count == 2])
+            kicker = [r for r, count in rank_counts.items() if count == 1][0]
+            return (*pairs, kicker)
+        
+        elif hand_type == "one pair":
+            pair_rank = [r for r, count in rank_counts.items() if count == 2][0]
+            kickers = sorted([r for r, count in rank_counts.items() if count == 1])
+            return (pair_rank, *kickers)
+        
+        elif hand_type in ["flush", "high card"]:
+            return tuple(ranks)  # Compare all cards from high to low
+        
+        return ()  # Fallback for unexpected types
+    
+    # Compute keys and find the best (lowest tuple, since lower ranks are better)
+    keys = [get_comparison_key(hand) for hand in hands]
+    
+    if not keys:
+        return "No valid hands."
+    best_key = min(keys)
+    winners = [hand[2] for i, hand in enumerate(hands) if keys[i] == best_key]
+    
+    if len(winners) > 1:
         return f"Tie {winners}"
     else:
-        return f"{hands[0][2]}"
+        return winners[0]
 
 def sort_hand(hand):
     sorted_hand = sorted(hand, key=lambda x: (x[1]))

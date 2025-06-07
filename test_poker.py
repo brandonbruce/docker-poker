@@ -156,7 +156,7 @@ class TestPokerHands(unittest.TestCase):
                 ["Ac","Jd","Qc","8c","Jc"],
                 ["Kd","Ks","Qs","Jh","5s"],
             ],
-            "One Pair  ['Kd', 'Ks', 'Qs', 'Jd', '5s']"
+            "One Pair  ['Kd', 'Ks', 'Qs', 'Jh', '5s']"
         ),
 
         (
